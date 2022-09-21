@@ -1,3 +1,21 @@
+# Why fork?
+
+This repository is fork of [julienschmidt/httprouter](https://github.com/julienschmidt/httprouter). 
+
+The httprouter package mishandles the URL-encoded / present in request paths. Despite requests and available PRs, this hasn't been fixed:
+
+- RawPathRouting julienschmidt/httprouter#55
+- allow router to use request.URL.RawPath julienschmidt/httprouter#209
+
+We are affected by this issue in many ways, e.g.:
+
+- Allow MFA devices with / in names to be deleted from UI gravitational/teleport#11011
+- Creating the user with / in name is possible and breaks things gravitational/teleport#10576
+
+This fork fixes the problem by merging one of the proposed patches. The fork's main branch is teleport, which is based on tag 1.3.0v we were using.
+
+The fork adds UseRawPath option to the router, which is false by default to maintain backward compatibility.
+
 # HttpRouter [![Build Status](https://travis-ci.org/julienschmidt/httprouter.svg?branch=master)](https://travis-ci.org/julienschmidt/httprouter) [![Coverage Status](https://coveralls.io/repos/github/julienschmidt/httprouter/badge.svg?branch=master)](https://coveralls.io/github/julienschmidt/httprouter?branch=master) [![GoDoc](https://godoc.org/github.com/julienschmidt/httprouter?status.svg)](http://godoc.org/github.com/julienschmidt/httprouter)
 
 HttpRouter is a lightweight high performance HTTP request router (also called *multiplexer* or just *mux* for short) for [Go](https://golang.org/).
